@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_376096_dsutils.DSUtilClient</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>DSUtilClient</name>
+        <script><![CDATA[var DSUtilClient = Class.create();
+DSUtilClient.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	
+	testUISection: function () {
+		const result = {
+			status: 'error',
+			message: ''
+		};
+		
+		const uiSection = this.getParameter('ui_section');
+		if (uiSection) {
+			const sectionGr = new GlideRecordSecure('sys_ui_section');
+			sectionGr.addQuery('sys_id', uiSection);
+			sectionGr.setLimit(1);
+			sectionGr.query();
+			if (sectionGr.next()) {
+				const currentSelectedDomainID = gs.getSession().getCurrentDomainID();
+				if (currentSelectedDomainID && currentSelectedDomainID != 'global') {
+					const currentRecordDomainID = sectionGr.getValue('sys_domain');
+					if (currentRecordDomainID == currentSelectedDomainID) {
+						result.status = 'success';
+					} else {
+						result.message = gs.getMessage('dsutils_domain_warning');
+					}
+				} else {
+					// writes from global domain are unproblematic
+					result.status = 'success';
+				}
+			} else {
+				result.message = gs.getMessage('devops_record_unauthorized_or_invalid_record');
+			}
+		} else {
+			result.message = gs.getMessage('dsutils_invalid_parameters');
+		}
+		
+		return JSON.stringify(result);
+	},
+
+    type: 'DSUtilClient'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-12 10:24:44</sys_created_on>
+        <sys_id>f3a900d097a235103c2d3f56f053af00</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>DSUtilClient</sys_name>
+        <sys_package display_value="Domain Separation Utils" source="x_376096_dsutils">c826c49c976235103c2d3f56f053af25</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Domain Separation Utils">c826c49c976235103c2d3f56f053af25</sys_scope>
+        <sys_update_name>sys_script_include_f3a900d097a235103c2d3f56f053af00</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-12 10:41:59</sys_updated_on>
+    </sys_script_include>
+</record_update>
