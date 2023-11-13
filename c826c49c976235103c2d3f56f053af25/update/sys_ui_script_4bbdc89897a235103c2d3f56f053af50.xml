@@ -15,8 +15,8 @@ x_376096_dsutils.loader = (function() {
 		return x_376096_dsutils.loader;
 	}
 	
-	var resources = {};
-	var resourceCallbacks = {};
+	const resources = {};
+	const resourceCallbacks = {};
 	
 	if (typeof window !== 'undefined' && window) {
 		resources['window'] = window;
@@ -34,7 +34,8 @@ x_376096_dsutils.loader = (function() {
 		});
 	});
 	
-	var version = '1.0.0';
+	const version = '1.0.1';
+	x_376096_dsutils.version = version;
 	createScript('x_376096_dsutils.form_layout.jsdbx?v=' + version);
 
 	return {
@@ -68,7 +69,7 @@ x_376096_dsutils.loader = (function() {
 	
 	function createScript(src) {
 		getResource('window', function ($window) {
-			var script = $window.document.createElement('script');
+			const script = $window.document.createElement('script');
 			script.src = src;
 			$window.document.head.appendChild(script);
 		});
@@ -80,14 +81,14 @@ x_376096_dsutils.loader = (function() {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-12 10:33:28</sys_created_on>
         <sys_id>4bbdc89897a235103c2d3f56f053af50</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_name>x_376096_dsutils.loader</sys_name>
         <sys_package display_value="Domain Separation Utils" source="x_376096_dsutils">c826c49c976235103c2d3f56f053af25</sys_package>
         <sys_policy/>
         <sys_scope display_value="Domain Separation Utils">c826c49c976235103c2d3f56f053af25</sys_scope>
         <sys_update_name>sys_ui_script_4bbdc89897a235103c2d3f56f053af50</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-11-12 10:33:47</sys_updated_on>
+        <sys_updated_on>2023-11-13 19:13:12</sys_updated_on>
         <ui_type>0</ui_type>
         <use_scoped_format>true</use_scoped_format>
     </sys_ui_script>
