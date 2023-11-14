@@ -34,7 +34,7 @@
 		// the developer has currently selected a non global domain
 		const currentRecordDomainID = current.getValue('sys_domain');
 		if (currentRecordDomainID != currentSelectedDomainID) {
-			gs.addErrorMessage(gs.getMessage('dsutils_domain_warning'));
+			gs.addErrorMessage(gs.getMessage('dsutils_domain_override_warning'));
 		}
 	}
 })(current, previous);]]></script>
@@ -44,7 +44,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4356405097a235103c2d3f56f053afb2</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>DSUtils Domain Separation Warning</sys_name>
         <sys_overrides/>
         <sys_package display_value="Domain Separation Utils" source="x_376096_dsutils">c826c49c976235103c2d3f56f053af25</sys_package>
@@ -52,7 +52,7 @@
         <sys_scope display_value="Domain Separation Utils">c826c49c976235103c2d3f56f053af25</sys_scope>
         <sys_update_name>sys_script_4356405097a235103c2d3f56f053afb2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-11-12 10:04:06</sys_updated_on>
+        <sys_updated_on>2023-11-14 11:53:47</sys_updated_on>
         <template/>
         <when>before_display</when>
     </sys_script>
