@@ -17,36 +17,35 @@ x_376096_dsutils.slush_bucket = (function() {
 	
 	x_376096_dsutils.loader.get('window', function ($window) {
 		const ui = $window.GlideUI.get();
-		// Prevent "Wrong Scope" message from clearing the Domain Separation warning
-		ui.clearOutputMessages = _ => {};
+		const addDomainOverrideHandlers = () => {
+			$window.g_view.on('changeSection', (viewManager) => {
+				// note: the viewManager table does not contain the table but the section sys_id
+				testSection($window, ui, viewManager.table);
+			});
+
+			$window.g_view.on('changeView', (viewManager) => {
+				testRelatedList($window, ui, viewManager.table, viewManager.view);
+			});
+		};
 		
-		const form = $window.document.querySelector('form[name=editPage]');
-		const type = form && form.querySelector('input[name=sysparm_form]');
-		const view = form && form.querySelector('select[name=sysparm_view]');
-		const id = form && form.querySelector('input[name=sys_target]');
-		let checker;
-		if (type && type.value == 'section') {
-			// id is the Sys Id of the section
-			checker = checkSection;
-		} else if (type && type.value == 'related_list') {
-			// id is the table for which the related view is configured
-			checker = testRelatedList;
-		}
-		
-		if (checker) {
-			checker($window, ui, id.value, view.value);
-			
-			const ootbChangeSection = $window.g_view.changeSection;
-			let viewChanged = false;
-			$window.g_view.changeSection = function () {
-				checker($window, ui, id.value, view.value);
-				ootbChangeSection.apply($window.g_view, arguments);
-			};
+		if ($window.g_view) {
+			addDomainOverrideHandlers();
+		} else {
+			Object.defineProperty($window, 'g_view', {
+				configurable: true,
+				set: function (v) {
+					Object.defineProperty($window, 'g_view', {
+						configurable: true, enumerable: true, writable: true, value: v
+					});
+					
+					addDomainOverrideHandlers();
+				}
+			});
 		}
 		
 	});
 	
-	function checkSection($window, ui, sectionSysId) {
+	function testSection($window, ui, sectionSysId) {
 		const ga = new $window.GlideAjax('DSUtilClient').setScope('x_376096_dsutils');
 		ga.addParam('sysparm_name', 'testUISection');
 		ga.addParam('ui_section', sectionSysId);
@@ -93,14 +92,14 @@ x_376096_dsutils.slush_bucket = (function() {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-12 10:31:37</sys_created_on>
         <sys_id>b167c0d097a235103c2d3f56f053af77</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>9</sys_mod_count>
         <sys_name>x_376096_dsutils.slush_bucket</sys_name>
         <sys_package display_value="Domain Separation Utils" source="x_376096_dsutils">c826c49c976235103c2d3f56f053af25</sys_package>
         <sys_policy/>
         <sys_scope display_value="Domain Separation Utils">c826c49c976235103c2d3f56f053af25</sys_scope>
         <sys_update_name>sys_ui_script_b167c0d097a235103c2d3f56f053af77</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-11-13 22:19:43</sys_updated_on>
+        <sys_updated_by>kr4uzi@gmail.com</sys_updated_by>
+        <sys_updated_on>2025-02-11 12:26:08</sys_updated_on>
         <ui_type>0</ui_type>
         <use_scoped_format>true</use_scoped_format>
     </sys_ui_script>
